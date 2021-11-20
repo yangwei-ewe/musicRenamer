@@ -60,7 +60,7 @@ namespace musicRenamer
             cmd.StartInfo.FileName = "cmd.exe";//via cmd
             cmd.Start();
             cmd.StandardInput.WriteLine("@echo on");
-            cmd.StandardInput.WriteLine($"code \"{musicUnitsArr[0].directory}\\musicInfoList.log\"");
+            cmd.StandardInput.WriteLine($"notepad \"{musicUnitsArr[0].directory}\\musicInfoList.log\"");
             cmd.StandardInput.WriteLine("exit");//return 
             //cmd.WaitForExit();
             //cmd.Close();
