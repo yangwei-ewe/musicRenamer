@@ -17,4 +17,8 @@
     <Optimize>false</Optimize>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="NetMQ" Version="4.0.1.6" />
+  </ItemGroup>
+
 </Project>

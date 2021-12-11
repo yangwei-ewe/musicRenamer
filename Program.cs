@@ -56,11 +56,14 @@ namespace musicRenamer
             cmd.StartInfo.RedirectStandardOutput = true;
             cmd.StartInfo.RedirectStandardError = true;
             cmd.StartInfo.UseShellExecute = false;
-            cmd.StartInfo.CreateNoWindow = false;
+            cmd.StartInfo.CreateNoWindow = true;
             cmd.StartInfo.FileName = "cmd.exe";//via cmd
             cmd.Start();
             cmd.StandardInput.WriteLine("@echo on");
-            cmd.StandardInput.WriteLine($"notepad \"{musicUnitsArr[0].directory}\\musicInfoList.log\"");
+            Console.WriteLine(musicUnitsArr[0].directory);
+            string target = "notepad \"" + @musicUnitsArr[0].directory + "\\musicInfoList.log\"";
+            Console.WriteLine(@target);
+            cmd.StandardInput.WriteLine(@target);
             cmd.StandardInput.WriteLine("exit");//return 
             //cmd.WaitForExit();
             //cmd.Close();
