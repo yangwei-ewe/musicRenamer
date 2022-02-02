@@ -8,6 +8,7 @@ namespace flacTag
     {
         string[,] flacTags;
         private FileInfo fileInfo;
+        private byte[] hexFlacBasicInfo;
 
         public string Title
         {
@@ -81,6 +82,14 @@ namespace flacTag
             }
         }
 
+        public string HexFlacBaseInfo
+        {
+            get
+            {
+                return BitConverter.ToString(hexFlacBasicInfo).Replace("-", "");
+            }
+        }
+
         public FlacTag(FileInfo fileInfo)//constructor
         {
             //04->VendorLength(->VendorString)->TagAmount->Tag[i]Length->TagContent
@@ -95,7 +104,7 @@ namespace flacTag
             while ((read[index] != 4) && (read[index] != 132))
             {
                 distance = BigDecToHex(index, read);
-                index = index + 3 + distance + 1;
+                index += 4+distance;
             }
 
             /*VendorLength(->VendorString)*/
@@ -152,6 +161,21 @@ namespace flacTag
                 flacTags[i, 0] = tmp[0];
                 flacTags[i, 1] = tmp[1];
             }
+            index = 4;
+            distance = 0;
+            while (read[index]!=0)
+            {
+                index++;
+            }
+            long length=SmallDecToHex(index, read);
+            index += 14;
+            hexFlacBasicInfo = new byte[8];
+            Array.Copy(read, index, hexFlacBasicInfo, 0, 8);
+            /*foreach (byte b in hexFlacBasicInfo)
+            {
+                Console.Write()
+            }
+            Console.WriteLine(BitConverter.ToString(hexFlacBasicInfo).Replace("-",""));*/
         }
 
         static long BigDecToHex(long ptr, byte[] flac)//read 3 block

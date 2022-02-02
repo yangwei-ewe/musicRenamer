@@ -53,24 +53,16 @@ namespace musicRenamer
             /***edit log by vscode***/
             Process cmd = new Process();
             cmd.StartInfo.RedirectStandardInput = true;
-            cmd.StartInfo.RedirectStandardOutput = true;
             cmd.StartInfo.RedirectStandardError = true;
-            cmd.StartInfo.UseShellExecute = false;
-            cmd.StartInfo.CreateNoWindow = true;
-            cmd.StartInfo.FileName = "cmd.exe";//via cmd
+            cmd.StartInfo.FileName = "notepad";//via notepad
+            cmd.StartInfo.Arguments = ("\""+@musicUnitsArr[0].directory + "\\musicInfoList.log");
             cmd.Start();
-            cmd.StandardInput.WriteLine("@echo on");
-            Console.WriteLine(musicUnitsArr[0].directory);
-            string target = "notepad \"" + @musicUnitsArr[0].directory + "\\musicInfoList.log\"";
-            Console.WriteLine(@target);
-            cmd.StandardInput.WriteLine(@target);
-            cmd.StandardInput.WriteLine("exit");//return 
-            //cmd.WaitForExit();
-            //cmd.Close();
+            cmd.WaitForExit();
+            cmd.Close();
             /***process end.***/
 
-            Console.WriteLine("press any key to continue renamer...");
-            Console.ReadKey();
+            //Console.WriteLine("press any key to continue renamer...");
+            //Console.ReadKey();
             Renamer();
             Console.WriteLine("press any key to continue...");
             File.Delete(musicUnitsArr[0].directory + @"\musicInfoList.log");
@@ -133,10 +125,10 @@ namespace musicRenamer
                 streamWriter.WriteLine(musicUnitsArr.Length.ToString());
                 foreach (CsMusicUnit musicUnit in musicUnitsArr)
                 {
-                    string musicUnitFormString = musicUnit.getForm;
                     streamWriter.WriteLine(musicUnit.FullName);
                     //Console.WriteLine(musicUnitFormString);
-                    streamWriter.WriteLine(musicUnitFormString);
+                    streamWriter.WriteLine(musicUnit.getForm);
+                    streamWriter.WriteLine(musicUnit.musicBasicInfo.HzRate + "/" + musicUnit.musicBasicInfo.BitPerSec);
                 }
                 streamWriter.Close();
                 Console.WriteLine("done.");
@@ -157,6 +149,7 @@ namespace musicRenamer
                 for (int i = 0; i < counter; i++)
                 {
                     string[] patterns = { renameHandle.ReadLine(), renameHandle.ReadLine() };
+                    renameHandle.ReadLine();
                     if (File.Exists(defaultDestinationDir + patterns[1] + ".flac"))
                     {
                         File.Delete(defaultDestinationDir + patterns[1] + ".flac");

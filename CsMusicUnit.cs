@@ -15,6 +15,8 @@ namespace musicRenamer
         {
             fileInfo = new(musicPath);
             flacTag = new(fileInfo);
+            musicBasicInfo = new();
+            musicBasicInfo.Init(flacTag.HexFlacBaseInfo);
         }
 
         public CsMusicUnit (FileInfo fileInfo)//contructor with class fileInfo
@@ -25,6 +27,7 @@ namespace musicRenamer
         //private string musicSource = "";
         private FileInfo fileInfo;
         public FlacTag flacTag;
+        public MusicBasicInfo musicBasicInfo;
         public string directory
         {
             get
@@ -56,6 +59,7 @@ namespace musicRenamer
                 return RenameFormer(this);
             }
         }
+
         static public string RenameFormer(CsMusicUnit csMusicUnit)
         {
             string rule;
