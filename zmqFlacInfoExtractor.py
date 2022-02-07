@@ -9,7 +9,7 @@ if datastr[0] == "0":
     plusZero = "0000"
 else:
     plusZero = ""
-binstr= "0000" + bin(int(datastr, 16))[2:]
+binstr= plusZero + bin(int(datastr, 16))[2:]
 hzRate = int(binstr[:20], 2)
 channelsNum = int(binstr[20:23], 2) + 1
 bps = int(binstr[23:28], 2) + 1

@@ -12,6 +12,11 @@ using System.Diagnostics;
 namespace musicRenamer
 {
     public class MusicBasicInfo
+        /***
+         * musicBasicInfo: decode music freq. & bps(bit per sec,)
+         * warning: Init brefore use data is required.
+         * 
+         ***/
     {
         private string hzRate, channles, bitPerSec;
         private bool isInit;

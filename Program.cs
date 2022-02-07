@@ -24,7 +24,7 @@ namespace musicRenamer
         {
             ModeHandle modeHandle;//if file dir was assigned or not
             /*mode sclector*/
-            /***init: pls use "musicUnitsArr"in below code***/
+            /*init: pls use "musicUnitsArr"in below code*/
             if (args.Length != 0)
             {
                 modeHandle = ModeHandle.assigned;
@@ -51,7 +51,7 @@ namespace musicRenamer
             CreatLog();
 
             /***edit log by vscode***/
-            Process cmd = new Process();
+            Process cmd = new Process();//call outside program
             cmd.StartInfo.RedirectStandardInput = true;
             cmd.StartInfo.RedirectStandardError = true;
             cmd.StartInfo.FileName = "notepad";//via notepad
@@ -118,7 +118,11 @@ namespace musicRenamer
         }
 
         static void CreatLog()
-        /*generate .log file,format: orgi.FileName%aritst(provide from class flacTag)%newFileName.flac*/
+        /***generate .log file,format: 
+         * orgi.FileDir
+         * flac tag/newFileName.flac (form as .rule)
+         * frequency/bps
+         ***/
         {
             using (StreamWriter streamWriter = File.CreateText(musicUnitsArr[0].directory + @"\musicInfoList.log"))
             {
@@ -138,9 +142,11 @@ namespace musicRenamer
 
         static void Renamer()
         {
-            /***use log file to find file&rename in order
-             ***first line is how many set of data following
-             ***each set data has [orig. posi.] and [new name] two line***/
+            /***
+             * use log file to find file&rename in order,
+             * first line is how many set of data following.
+             * each set data has [orig. posi.] and [new name] [freq./bps] three line.
+             ***/
             try
             {
                 int counter = 0;
@@ -149,7 +155,7 @@ namespace musicRenamer
                 for (int i = 0; i < counter; i++)
                 {
                     string[] patterns = { renameHandle.ReadLine(), renameHandle.ReadLine() };
-                    renameHandle.ReadLine();
+                    renameHandle.ReadLine();//ignore [freq./bps]
                     if (File.Exists(defaultDestinationDir + patterns[1] + ".flac"))
                     {
                         File.Delete(defaultDestinationDir + patterns[1] + ".flac");

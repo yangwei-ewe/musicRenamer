@@ -6,7 +6,7 @@ namespace flacTag
 {
     public class FlacTag
     {
-        string[,] flacTags;
+        private string[,] flacTags;//[blank name,value]
         private FileInfo fileInfo;
         private byte[] hexFlacBasicInfo;
 
@@ -90,7 +90,8 @@ namespace flacTag
             }
         }
 
-        public FlacTag(FileInfo fileInfo)//constructor
+        public FlacTag(FileInfo fileInfo)
+        /*constructor*/
         {
             //04->VendorLength(->VendorString)->TagAmount->Tag[i]Length->TagContent
             long index = 4;
@@ -123,34 +124,6 @@ namespace flacTag
                 byte[] currTag = new byte[distance];
                 Array.Copy(read, index + 1, currTag, 0, distance);
                 allFlacTag[i] = Encoding.UTF8.GetString(currTag);
-                /*byte[] CheckTag = new byte[9];
-
-                Array.Copy(read, index + 1, CheckTag, 0, 9);
-                string TagName = Encoding.UTF8.GetString(CheckTag);
-                if (TagName.Contains("artist", StringComparison.OrdinalIgnoreCase))
-                {
-                    byte[] ByteArtist = new byte[distance - 7];
-                    Array.Copy(read, index + 8, ByteArtist, 0, distance - 7);
-                    artist = Encoding.UTF8.GetString(ByteArtist);
-                }
-                if (TagName.Contains("title", StringComparison.OrdinalIgnoreCase))
-                {
-                    byte[] ByteTitle = new byte[distance - 6];
-                    Array.Copy(read, index + 7, ByteTitle, 0, distance - 6);
-                    title = Encoding.UTF8.GetString(ByteTitle);
-                }
-                if (TagName.Contains("album", StringComparison.OrdinalIgnoreCase))
-                {
-                    byte[] ByteAlbum = new byte[distance - 6];
-                    Array.Copy(read, index + 7, ByteAlbum, 0, distance - 6);
-                    album = Encoding.UTF8.GetString(ByteAlbum);
-                }
-                if (TagName.Contains("organization", StringComparison.OrdinalIgnoreCase))
-                {
-                    byte[] ByteOrganization = new byte[distance - 9];
-                    Array.Copy(read, index + 10, ByteOrganization, 0, distance - 9);
-                    organization = Encoding.UTF8.GetString(ByteOrganization);
-                }*/
                 index += distance;
             }
 
@@ -162,23 +135,17 @@ namespace flacTag
                 flacTags[i, 1] = tmp[1];
             }
             index = 4;
-            distance = 0;
             while (read[index]!=0)
             {
                 index++;
             }
-            long length=SmallDecToHex(index, read);
             index += 14;
             hexFlacBasicInfo = new byte[8];
             Array.Copy(read, index, hexFlacBasicInfo, 0, 8);
-            /*foreach (byte b in hexFlacBasicInfo)
-            {
-                Console.Write()
-            }
-            Console.WriteLine(BitConverter.ToString(hexFlacBasicInfo).Replace("-",""));*/
         }
 
-        static long BigDecToHex(long ptr, byte[] flac)//read 3 block
+        static long BigDecToHex(long ptr, byte[] flac)
+        /*read 3 block*/
         {
             double result = 0;
             result = (flac[ptr += 1] / 16) * Math.Pow(16, 5) + (flac[ptr] % 16) * Math.Pow(16, 4)
@@ -188,7 +155,8 @@ namespace flacTag
             return final;
         }
 
-        static long SmallDecToHex(long ptr, byte[] flac)//read 4 block
+        static long SmallDecToHex(long ptr, byte[] flac)
+        /*read 4 block*/
         {
             double result = 0;
             result = (flac[ptr += 1] / 16) * 16 + (flac[ptr] % 16)
