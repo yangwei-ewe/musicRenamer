@@ -55,7 +55,7 @@ namespace musicRenamer
             cmd.StartInfo.RedirectStandardInput = true;
             cmd.StartInfo.RedirectStandardError = true;
             cmd.StartInfo.FileName = "notepad";//via notepad
-            cmd.StartInfo.Arguments = ("\""+@musicUnitsArr[0].directory + "\\musicInfoList.log");
+            cmd.StartInfo.Arguments = ("\""+@musicUnitsArr[0].directory + "\\musicInfoList.log\"");
             cmd.Start();
             cmd.WaitForExit();
             cmd.Close();

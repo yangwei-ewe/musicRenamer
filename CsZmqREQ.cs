@@ -86,7 +86,8 @@ namespace musicRenamer
         }
         private async void StartPY()
         {
-            Process.Start(@"C:\Python310\python.exe", @"..\..\..\zmqFlacInfoExtractor.py");
+            //Process.Start("explorer", @".");
+            Process.Start(@"py", @"C:\works\musicRenamer\zmqFlacInfoExtractor.py");
         }
     }
 }
