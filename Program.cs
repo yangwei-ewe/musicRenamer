@@ -13,7 +13,7 @@ namespace musicRenamer
 
     class Program
     {
-        static string defaultSourceDir = @"C:\Users\abm69\Desktop\新增資料夾\";
+        static string defaultSourceDir = @"C:\Users\abm69\Desktop\TMP\";
         static string defaultDestinationDir = @"C:\Users\abm69\Music\";
         //static DirectoryInfo defaultSourceDirectoryInfo = new(defaultDestinationDir);
         static CsMusicUnit[] musicUnitsArr;
