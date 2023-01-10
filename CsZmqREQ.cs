@@ -77,6 +77,7 @@ namespace musicRenamer
             StartPY();
             var clientCtx = new RequestSocket("tcp://localhost:5556");
             clientCtx.SendFrame(MSG);
+            
             string[] recvStr = clientCtx.ReceiveFrameString().Split(',');
             hzRate = recvStr[0];
             channles = recvStr[1];
@@ -87,7 +88,7 @@ namespace musicRenamer
         private async void StartPY()
         {
             //Process.Start("explorer", @".");
-            Process.Start(@"py", @"C:\works\musicRenamer\zmqFlacInfoExtractor.py");
+            Process.Start("\"C:\\Python\\Python311\\python\"", @"C:\works\musicRenamer\zmqFlacInfoExtractor.py");
         }
     }
 }
