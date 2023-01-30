@@ -70,7 +70,7 @@ namespace musicRenamer
             rule = rule.Replace("<Artist>", csMusicUnit.flacTag.Artist, StringComparison.Ordinal)
                 .Replace("<Name>", csMusicUnit.flacTag.Title, StringComparison.OrdinalIgnoreCase)
                 .Replace("<Album>", csMusicUnit.flacTag.Album, StringComparison.OrdinalIgnoreCase)
-                .Replace("?", "？").Replace("\"", "'").Replace("*", "＊");
+                .Replace("?", "？").Replace("\"", "'").Replace("*", "＊").Replace(":","：");
             return rule;
         }
     }
